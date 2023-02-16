@@ -73,7 +73,8 @@
 <body>
     <?php
     //Variables
-    $salary = $type = $annualSalary = $annualTax = $monthlyTax = "";
+    $salary = $type = "";
+    $annualSalary = $annualTax = $monthlyTax = "0.00";
     $salaryErr = $typeErr = "";
     $additional = $excess = $percent = "0";
     
@@ -149,7 +150,7 @@
             <!--Salary-->
             <div class="m-3">
                 <label for="salary" class="form-label">Salary (PHP)</label>
-                <input type="text" class="form-control <?php echo $salaryErr ? 'is-invalid' : null; ?>" id="salary" name="salary" placeholder="Enter your salary">
+                <input type="text" class="form-control <?php echo $salaryErr ? 'is-invalid' : null; ?>" id="salary" name="salary" placeholder="Enter your salary" value="<?php echo isset($_POST['salary']) ? $_POST['salary'] : '' ?>">
                 <div class="text-danger">
                     <small style="color: rgb(220,126,128)"><?php echo $salaryErr; ?></small>
                 </div>
@@ -157,11 +158,29 @@
             <!--Type-->
             <div class="m-3">
                 <label for="type" class="form-label">Type</label>
-
+                
                 <div style="display:block;">
-                    <input type="radio" id="type" name="type" style="margin-right:8px;" value="Bi-Monthly">
+                    <input type="radio" id="type" name="type" style="margin-right:8px;" value="Bi-Monthly"
+                    <?php
+                    if(isset($_POST['type'])) {
+                        if (!empty($_POST['salary'])) {
+                            if($_POST['type']=="Bi-Monthly") {
+                                echo 'checked="checked"';
+                            }
+                        } 
+                    }
+                    ?> >
                     <label for="type-a" style="margin-right:2rem; font-weight:400;">Bi-Monthly</label>
-                    <input type="radio" id="type" name="type"  style="margin-right:8px;" value="Monthly">
+                    <input type="radio" id="type" name="type"  style="margin-right:8px;" value="Monthly"
+                    <?php
+                    if(isset($_POST['type'])) {
+                        if (!empty($_POST['salary'])) {
+                            if($_POST['type']=="Monthly") {
+                                echo 'checked="checked"';
+                            }
+                        } 
+                    }
+                    ?> >
                     <label for="type-b" style="font-weight:400;">Monthly</label>
                 </div>
 
@@ -175,7 +194,8 @@
                 <input type="submit" name="reset" value="Reset" class="btn btn-outline-light px-5 m-3">
             </div>
         </form>
-
+        
+        <hr style="border: 1px solid rgba(255, 255, 255); border-radius: 5px;">
         <h4 class="mt-4">Step 2: See your estimated tax below.</h4>
         <table border="0">
             <tr>
@@ -183,7 +203,7 @@
                 <td><?php echo "PHP " . $annualSalary; ?></td>
             </tr>
             <tr>
-                <th>Annual Tax</th>
+                <th>Estimated Annual Tax</th>
                 <td><?php echo "PHP " . $annualTax; ?></td>
             </tr>
             <tr>
