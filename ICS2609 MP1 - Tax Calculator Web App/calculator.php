@@ -207,7 +207,7 @@
                 <td><?php echo "PHP " . $annualTax; ?></td>
             </tr>
             <tr>
-                <th>Estimated Monthly Salary</th>
+                <th>Estimated Monthly Tax</th>
                 <td><?php echo "PHP " . $monthlyTax; ?></td>
             </tr>
         </table>
